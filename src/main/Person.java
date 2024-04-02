@@ -23,7 +23,7 @@ public class Person {
 
 	public Person(String name, String gender) {
 		this.name = name;
-		this.gender = setGender(gender); 
+		this.gender = setGender(gender);
 		this.birthday = "";
 		this.deathdate = "";
 		this.mother = null;
@@ -38,7 +38,8 @@ public class Person {
 	 * @param birthday
 	 * @param deathdate
 	 */
-	public Person(String name, String gender, String birthday, String deathdate) {
+	public Person(String name, String gender, String birthday,
+			String deathdate) {
 		this.name = name;
 		this.gender = setGender(gender);
 		this.birthday = birthday;
@@ -54,9 +55,9 @@ public class Person {
 	 * @param name
 	 * @param birthday
 	 */
-	public Person(String name, String gender,  String birthday) {
+	public Person(String name, String gender, String birthday) {
 		this.name = name;
-		this.gender = setGender(gender); 
+		this.gender = setGender(gender);
 		this.birthday = birthday;
 		this.deathdate = "";
 		this.mother = null;
@@ -87,14 +88,18 @@ public class Person {
 	public Sex getGender() {
 		return gender;
 	}
-	
+
 	/**
 	 * Compares String inupt and returns the correct gender enum.
+	 * 
 	 * @param gender
 	 * @return
 	 */
 	private Sex setGender(String gender) {
-		return (gender.compareToIgnoreCase("male") == 0) ? Sex.MALE : Sex.FEMALE;
+		return (gender.compareToIgnoreCase("male") == 0
+				|| gender.compareToIgnoreCase("m") == 0)
+						? Sex.MALE
+						: Sex.FEMALE;
 	}
 
 	/**
@@ -157,12 +162,12 @@ public class Person {
 		this.father = father;
 	}
 
-	/** 
+	/**
 	 * @param currentSpouse
 	 *            the currentSpouse to set
 	 */
 	public void setCurrentSpouse(Person spouse) {
-		if(currentSpouse != null) {
+		if (currentSpouse != null) {
 			exes.add(currentSpouse);
 		}
 		currentSpouse = spouse;
@@ -188,9 +193,10 @@ public class Person {
 	public List<Person> getExes() {
 		return exes;
 	}
-	
+
 	/**
 	 * Add child to Person's children and assign them as a parent.
+	 * 
 	 * @param child
 	 */
 	public boolean addChild(Person child) {
@@ -241,5 +247,4 @@ public class Person {
 				&& Objects.equals(name, other.name);
 	}
 
-	
 }
