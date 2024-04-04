@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This is the person object
+ * This is the person object.
  * 
  * @author Stephen Schroer
  *
@@ -21,9 +21,18 @@ public class Person {
 	private final List<Person> children;
 	private final List<Person> exes;
 
-	public Person(String name, String gender) {
+	/**
+	 * 
+	 * @param name
+	 *            The name of the person.
+	 * @param gender
+	 *            The gender of the person. Must be either "male" or "female".
+	 * @throws GenderException
+	 *             If the gender provided is not "male" or "female".
+	 */
+	public Person(String name, String gender) throws GenderException {
 		this.name = name;
-		this.gender = setGender(gender);
+		this.gender = parseGender(gender);
 		this.birthday = "";
 		this.deathdate = "";
 		this.mother = null;
@@ -35,13 +44,20 @@ public class Person {
 
 	/**
 	 * @param name
+	 *            The name of the person.
+	 * @param gender
+	 *            The gender of the person. Must be either "male" or "female".
 	 * @param birthday
+	 *            The birthday of the person.
 	 * @param deathdate
+	 *            The day the person died.
+	 * @throws GenderException
+	 *             If the gender provided is not "male" or "female".
 	 */
-	public Person(String name, String gender, String birthday,
-			String deathdate) {
+	public Person(String name, String gender, String birthday, String deathdate)
+			throws GenderException {
 		this.name = name;
-		this.gender = setGender(gender);
+		this.gender = parseGender(gender);
 		this.birthday = birthday;
 		this.deathdate = deathdate;
 		this.mother = null;
@@ -53,11 +69,18 @@ public class Person {
 
 	/**
 	 * @param name
+	 *            The name of the person.
+	 * @param gender
+	 *            The gender of the person. Must be either "male" or "female".
 	 * @param birthday
+	 *            The birthday of the person.
+	 * @throws GenderException
+	 *             If the gender provided is not "male" or "female".
 	 */
-	public Person(String name, String gender, String birthday) {
+	public Person(String name, String gender, String birthday)
+			throws GenderException {
 		this.name = name;
-		this.gender = setGender(gender);
+		this.gender = parseGender(gender);
 		this.birthday = birthday;
 		this.deathdate = "";
 		this.mother = null;
@@ -93,13 +116,24 @@ public class Person {
 	 * Compares String inupt and returns the correct gender enum.
 	 * 
 	 * @param gender
-	 * @return
+	 *            The gender of the person. Must be either "male" or "female".
+	 * @return Sex Enum
+	 * @throws GenderException
 	 */
-	private Sex setGender(String gender) {
-		return (gender.compareToIgnoreCase("male") == 0
-				|| gender.compareToIgnoreCase("m") == 0)
-						? Sex.MALE
-						: Sex.FEMALE;
+	private Sex parseGender(String gender) throws GenderException {
+		if (gender != null && !gender.isBlank()) {
+			if (gender.compareToIgnoreCase("female") == 0
+					|| gender.compareToIgnoreCase("f") == 0) {
+				return Sex.FEMALE;
+			}
+			if (gender.compareToIgnoreCase("male") == 0
+					|| gender.compareToIgnoreCase("m") == 0) {
+				return Sex.MALE;
+			}
+		}
+
+		throw new GenderException("Invalid gender: \"" + gender
+				+ "\". Please enter \"male\" or \"female\"");
 	}
 
 	/**
@@ -163,7 +197,7 @@ public class Person {
 	}
 
 	/**
-	 * @param currentSpouse
+	 * @param spouse
 	 *            the currentSpouse to set
 	 */
 	public void setCurrentSpouse(Person spouse) {
@@ -195,9 +229,12 @@ public class Person {
 	}
 
 	/**
-	 * Add child to Person's children and assign them as a parent.
+	 * Add child to Person's children and assign them as a parent
 	 * 
 	 * @param child
+	 *            The Child to add to children
+	 * @return true if the child was added successfully, false if the child was
+	 *         already present in the list of children.
 	 */
 	public boolean addChild(Person child) {
 		if (!children.contains(child)) {
