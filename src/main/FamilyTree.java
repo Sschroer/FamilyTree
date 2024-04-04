@@ -6,14 +6,29 @@ package main;
  *
  */
 public class FamilyTree {
+	private Person head;
 	
+	/**
+	 * This is the familyTree constructor.
+	 */
 	public FamilyTree() {
-		// TODO Auto-generated constructor stub
+		head = new Person();
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	/**
+	 * @return the head
+	 */
+	public Person getHead() {
+		return head;
 	}
+
+	/**
+	 * @param newHead the head to set
+	 */
+	public void setHead(Person newHead) {
+		head = newHead;
+	}
+	
+	
 
 }

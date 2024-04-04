@@ -20,6 +20,23 @@ public class Person {
 	private Person currentSpouse;
 	private final List<Person> children;
 	private final List<Person> exes;
+	
+
+	/**
+	 * Constructor for default instance (head of FamilyTree) 
+	 */
+	 protected Person() {
+	        this.name = "";
+	        this.gender = Sex.MALE; 
+	        this.birthday = "";
+	        this.deathdate = "";
+	        this.mother = null;
+	        this.father = null;
+	        this.currentSpouse = null;
+	        this.children = new ArrayList<>();
+	        this.exes = new ArrayList<>();
+	        
+	    }
 
 	/**
 	 * 
@@ -40,6 +57,7 @@ public class Person {
 		this.currentSpouse = null;
 		this.children = new ArrayList<>();
 		this.exes = new ArrayList<>();
+		
 	}
 
 	/**
@@ -65,6 +83,7 @@ public class Person {
 		this.currentSpouse = null;
 		this.children = new ArrayList<>();
 		this.exes = new ArrayList<>();
+		
 	}
 
 	/**
@@ -88,6 +107,7 @@ public class Person {
 		this.currentSpouse = null;
 		this.children = new ArrayList<>();
 		this.exes = new ArrayList<>();
+		
 	}
 
 	/**
@@ -249,6 +269,16 @@ public class Person {
 		}
 		return false;
 	}
+	
+	/**
+	 *  
+	 * @return true if person is default instance, False if person isn't default instance.
+	 */
+	public boolean isDefaultInstance() {
+	        return name.isEmpty() && gender == Sex.MALE && birthday.isEmpty() && deathdate.isEmpty() &&
+	               mother == null && father == null && currentSpouse == null &&
+	               !children.isEmpty() && exes.isEmpty();
+	    }
 
 	@Override
 	public String toString() {
