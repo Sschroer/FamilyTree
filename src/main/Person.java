@@ -1,5 +1,6 @@
 package main;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,30 +14,47 @@ import java.util.Objects;
 public class Person {
 	private String name;
 	private final Sex gender;
-	private String birthday;
-	private String deathdate;
+	private LocalDate birthday;
+	private LocalDate deathdate;
 	private Person mother;
 	private Person father;
 	private Person currentSpouse;
 	private final List<Person> children;
 	private final List<Person> exes;
-	
 
 	/**
-	 * Constructor for default instance (head of FamilyTree) 
+	 * Constructor for default instance (head of FamilyTree)
 	 */
-	 protected Person() {
-	        this.name = "";
-	        this.gender = Sex.MALE; 
-	        this.birthday = "";
-	        this.deathdate = "";
-	        this.mother = null;
-	        this.father = null;
-	        this.currentSpouse = null;
-	        this.children = new ArrayList<>();
-	        this.exes = new ArrayList<>();
-	        
-	    }
+	protected Person() {
+		this.name = "";
+		this.gender = Sex.UNKNOWN;
+		this.birthday = null;
+		this.deathdate = null;
+		this.mother = null;
+		this.father = null;
+		this.currentSpouse = null;
+		this.children = new ArrayList<>();
+		this.exes = new ArrayList<>();
+
+	}
+
+	/**
+	 * This method creates a person who's sex is known.
+	 * 
+	 * @param gender
+	 *            The gender of the person. Must be either "male" or "female".
+	 */
+	protected Person(Sex gender) {
+		this.name = "";
+		this.gender = gender;
+		this.birthday = null;
+		this.deathdate = null;
+		this.mother = null;
+		this.father = null;
+		this.currentSpouse = null;
+		this.children = new ArrayList<>();
+		this.exes = new ArrayList<>();
+	}
 
 	/**
 	 * 
@@ -50,14 +68,14 @@ public class Person {
 	public Person(String name, String gender) throws GenderException {
 		this.name = name;
 		this.gender = parseGender(gender);
-		this.birthday = "";
-		this.deathdate = "";
+		this.birthday = null;
+		this.deathdate = null;
 		this.mother = null;
 		this.father = null;
 		this.currentSpouse = null;
 		this.children = new ArrayList<>();
 		this.exes = new ArrayList<>();
-		
+
 	}
 
 	/**
@@ -72,7 +90,7 @@ public class Person {
 	 * @throws GenderException
 	 *             If the gender provided is not "male" or "female".
 	 */
-	public Person(String name, String gender, String birthday, String deathdate)
+	public Person(String name, String gender, LocalDate birthday, LocalDate deathdate)
 			throws GenderException {
 		this.name = name;
 		this.gender = parseGender(gender);
@@ -83,7 +101,7 @@ public class Person {
 		this.currentSpouse = null;
 		this.children = new ArrayList<>();
 		this.exes = new ArrayList<>();
-		
+
 	}
 
 	/**
@@ -96,18 +114,18 @@ public class Person {
 	 * @throws GenderException
 	 *             If the gender provided is not "male" or "female".
 	 */
-	public Person(String name, String gender, String birthday)
+	public Person(String name, String gender, LocalDate birthday)
 			throws GenderException {
 		this.name = name;
 		this.gender = parseGender(gender);
 		this.birthday = birthday;
-		this.deathdate = "";
+		this.deathdate = null;
 		this.mother = null;
 		this.father = null;
 		this.currentSpouse = null;
 		this.children = new ArrayList<>();
 		this.exes = new ArrayList<>();
-		
+
 	}
 
 	/**
@@ -159,7 +177,7 @@ public class Person {
 	/**
 	 * @return the birthday
 	 */
-	public String getBirthday() {
+	public LocalDate getBirthday() {
 		return birthday;
 	}
 
@@ -167,14 +185,14 @@ public class Person {
 	 * @param birthday
 	 *            the birthday to set
 	 */
-	public void setBirthday(String birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 
 	/**
 	 * @return the deathdate
 	 */
-	public String getDeathdate() {
+	public LocalDate getDeathdate() {
 		return deathdate;
 	}
 
@@ -182,7 +200,7 @@ public class Person {
 	 * @param deathdate
 	 *            the deathdate to set
 	 */
-	public void setDeathdate(String deathdate) {
+	public void setDeathdate(LocalDate deathdate) {
 		this.deathdate = deathdate;
 	}
 
@@ -220,11 +238,8 @@ public class Person {
 	 * @param spouse
 	 *            the currentSpouse to set
 	 */
-	public void setCurrentSpouse(Person spouse) {
-		if (currentSpouse != null) {
-			exes.add(currentSpouse);
-		}
-		currentSpouse = spouse;
+	public void setCurrentSpouse(Person currentSpouse) {
+		this.currentSpouse = currentSpouse;
 	}
 
 	/**
@@ -269,16 +284,17 @@ public class Person {
 		}
 		return false;
 	}
-	
+
 	/**
-	 *  
-	 * @return true if person is default instance, False if person isn't default instance.
+	 * 
+	 * @return true if person is default instance, False if person isn't default
+	 *         instance.
 	 */
-	public boolean isDefaultInstance() {
-	        return name.isEmpty() && gender == Sex.MALE && birthday.isEmpty() && deathdate.isEmpty() &&
-	               mother == null && father == null && currentSpouse == null &&
-	               !children.isEmpty() && exes.isEmpty();
-	    }
+	public boolean isHead() {
+		return name.isEmpty() && gender == Sex.UNKNOWN && birthday == null
+				&& deathdate == null && mother == null && father == null
+				&& currentSpouse == null && exes.isEmpty();
+	}
 
 	@Override
 	public String toString() {
@@ -292,6 +308,7 @@ public class Person {
 	public int hashCode() {
 		return Objects.hash(birthday, children, currentSpouse, deathdate, exes,
 				father, gender, mother, name);
+		
 	}
 
 	@Override
@@ -313,5 +330,5 @@ public class Person {
 				&& Objects.equals(mother, other.mother)
 				&& Objects.equals(name, other.name);
 	}
-
+	
 }
