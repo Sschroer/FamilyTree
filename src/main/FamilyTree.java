@@ -19,7 +19,7 @@ public class FamilyTree {
 	 * This is the familyTree constructor.
 	 */
 	public FamilyTree() {
-		head = null;
+		head = new Node<>();
 	}
 
 	/**
