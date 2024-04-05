@@ -96,10 +96,13 @@ public class FamilyTree {
 	}
 
 	/**
-	 * Finds people in the family tree with the specified name using breadth-first search.
+	 * Finds people in the family tree with the specified name using
+	 * breadth-first search.
 	 *
-	 * @param name the name of the people to search for
-	 * @return a List containing Person objects with matching names, or an empty list if none are found
+	 * @param name
+	 *            the name of the people to search for
+	 * @return a List containing Person objects with matching names, or an empty
+	 *         list if none are found
 	 */
 	public List<Person> findPeople(String name) {
 		List<Person> foundPeople = new ArrayList<>();
@@ -108,7 +111,7 @@ public class FamilyTree {
 
 		while (!queue.isEmpty()) {
 			Person currentPerson = queue.poll();
-			// Check if name and birthday match
+
 			if (currentPerson.getName().equalsIgnoreCase(name)) {
 				foundPeople.add(currentPerson); // Found a person with matching
 												// name
@@ -166,8 +169,7 @@ public class FamilyTree {
 		Person bioParent = findPerson(parent);
 
 		if (bioParent != null) {
-			Sex parentGender = bioParent.getGender();
-			Sex unknownParentGender = (parentGender == Sex.MALE)
+			Sex unknownParentGender = (bioParent.getGender() == Sex.MALE)
 					? Sex.FEMALE
 					: Sex.MALE;
 
@@ -182,30 +184,35 @@ public class FamilyTree {
 	}
 
 	/**
-	 * Assigns a parent to a child if the child does not already have that type of parent assigned.
+	 * Assigns a parent to a child if the child does not already have a parent
+	 * assigned.
 	 *
-	 * @param parent the parent to assign
-	 * @param child  the child to assign the parent to
-	 * @return true if the parent was successfully assigned to the child, false otherwise
+	 * @param parent
+	 *            the parent to assign
+	 * @param child
+	 *            the child to assign the parent to
+	 * @return true if the parent was successfully assigned to the child, false
+	 *         otherwise
 	 */
 	public boolean assignParent(Person parent, Person child) {
-	    Person kid = findPerson(child);
+		Person kid = findPerson(child);
 
-	    if (kid != null && (kid.getFather() == null || kid.getMother() == null)) {  
-	        if (parent.getGender() == Sex.MALE) {
-	            kid.setFather(parent);
-	            
-	        } else {
-	            kid.setMother(parent);
-	        }
-	        parent.addChild(child);
-	        return true; 
-	    }
-	    return false;
+		if (kid != null
+				&& (kid.getFather() == null || kid.getMother() == null)) {
+			if (parent.getGender() == Sex.MALE) {
+				kid.setFather(parent);
+
+			} else {
+				kid.setMother(parent);
+			}
+			parent.addChild(child);
+			return true;
+		}
+		return false;
 	}
-	
+
 	/*
-	 * getSiblings(), marry(), divorce(), getParents(),
+	 * getSiblings(), setSpouse(), removeSpouse(), getParents(),
 	 * relationshipBetween() methods to be implemented in future.
 	 */
 }
