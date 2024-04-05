@@ -189,8 +189,31 @@ public class FamilyTree {
 		return false;
 	}
 
+	/**
+	 * Assigns a parent to a child if the child does not already have that type of parent assigned.
+	 *
+	 * @param parent the parent to assign
+	 * @param child  the child to assign the parent to
+	 * @return true if the parent was successfully assigned to the child, false otherwise
+	 */
+	public boolean assignParent(Person parent, Person child) {
+	    Person kid = findPerson(child);
+
+	    if (kid != null && (kid.getFather() == null || kid.getMother() == null)) {  
+	        if (parent.getGender() == Sex.MALE) {
+	            kid.setFather(parent);
+	            
+	        } else {
+	            kid.setMother(parent);
+	        }
+	        parent.addChild(child);
+	        return true; 
+	    }
+	    return false;
+	}
+	
 	/*
-	 * addParent(), getSiblings(), marry(), divorce(), getParents(),
+	 * getSiblings(), marry(), divorce(), getParents(),
 	 * relationshipBetween() methods to be implemented in future.
 	 */
 }
