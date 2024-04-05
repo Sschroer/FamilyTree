@@ -6,5 +6,5 @@ package main;
  *
  */
 public enum Sex {
-	MALE, FEMALE, UNKNOWN
+	MALE, FEMALE
 }

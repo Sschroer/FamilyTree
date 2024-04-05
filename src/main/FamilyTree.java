@@ -13,19 +13,31 @@ import java.util.Queue;
  *
  */
 public class FamilyTree {
-	private Person head;
+	private Node<Person> head;
 
 	/**
 	 * This is the familyTree constructor.
 	 */
 	public FamilyTree() {
-		head = new Person();
+		head = null;
+	}
+
+	/**
+	 * Constructs a FamilyTree with the given progenitor as the head of the
+	 * family tree.
+	 *
+	 * @param progenitor
+	 *            the Person object representing the progenitor or root of the
+	 *            family tree
+	 */
+	public FamilyTree(Person progenitor) {
+		head.setNext(progenitor);
 	}
 
 	/**
 	 * @return the head
 	 */
-	public Person getHead() {
+	public Node<Person> getHead() {
 		return head;
 	}
 
@@ -33,33 +45,24 @@ public class FamilyTree {
 	 * @param newHead
 	 *            the head to set
 	 */
-	public void setHead(Person newHead) {
-		head = newHead;
+	public void setNext(Person newHead) {
+		head.setNext(newHead);
 	}
 
 	/**
-	 * Finds a person in the family tree by their name and birthday.
-	 * 
-	 * This method performs a breadth-first search starting from the head of the
-	 * family tree. It iteratively explores each person's children, adding them
-	 * to a queue for further exploration. If a person's name and birthday match
-	 * the specified parameters (case-insensitive name match and exact birthday
-	 * match), the method returns that person. If no person with the specified
-	 * name and birthday is found in the family tree, the method returns
-	 * {@code null}.
-	 * 
+	 * Finds a person in the family tree with the specified name and birthday
+	 * using breadth-first search.
+	 *
 	 * @param name
-	 *            The name of the person to search for.
+	 *            the name of the person to search for
 	 * @param birthday
-	 *            The birthday of the person to search for.
-	 * @return The person found with the specified name and birthday, or
-	 *         {@code null} if not found.
+	 *            the birthday of the person to search for
+	 * @return the Person object if found, or null if not found
 	 */
-
 	public Person findPerson(String name, LocalDate birthday) {
 		// Create a queue for a breadth first search
 		Queue<Person> queue = new LinkedList<>();
-		queue.addAll(head.getChildren());
+		queue.add(head.getNext());
 
 		while (!queue.isEmpty()) {
 			Person currentPerson = queue.poll();
@@ -79,23 +82,16 @@ public class FamilyTree {
 	}
 
 	/**
-	 * Finds a person in the family tree.
-	 * 
-	 * This method performs a breadth-first search starting from the head of the
-	 * family tree. It iteratively explores each person's children, adding them
-	 * to a queue for further exploration. If a person in the family tree equals
-	 * the specified target person (based on object equality), the method
-	 * returns that person. If the target person is not found in the family
-	 * tree, the method returns {@code null}.
-	 * 
+	 * Finds a person in the family tree matching the provided target person
+	 * using breadth-first search.
+	 *
 	 * @param target
-	 *            The person to search for in the family tree.
-	 * @return The person found in the family tree that equals the specified
-	 *         target person, or {@code null} if the target person is not found.
+	 *            the person object to search for
+	 * @return the Person object if found, or null if not found
 	 */
 	public Person findPerson(Person target) {
 		Queue<Person> queue = new LinkedList<>();
-		queue.addAll(head.getChildren());
+		queue.add(head.getNext());
 
 		while (!queue.isEmpty()) {
 			Person currentPerson = queue.poll();
@@ -108,24 +104,15 @@ public class FamilyTree {
 	}
 
 	/**
-	 * Finds all people with the specified name in the family tree.
-	 * 
-	 * This method performs a breadth-first search starting from the head of the
-	 * family tree. It iteratively explores each person's children, adding them
-	 * to a queue for further exploration. If a person's name matches the
-	 * specified name (case-insensitive), they are added to the list of found
-	 * people. The method returns a list containing all people with the
-	 * specified name found in the family tree.
-	 * 
-	 * @param name
-	 *            The name to search for.
-	 * @return A list containing all people with the specified name found in the
-	 *         family tree.
+	 * Finds people in the family tree with the specified name using breadth-first search.
+	 *
+	 * @param name the name of the people to search for
+	 * @return a List containing Person objects with matching names, or an empty list if none are found
 	 */
 	public List<Person> findPeople(String name) {
 		List<Person> foundPeople = new ArrayList<>();
 		Queue<Person> queue = new LinkedList<>();
-		queue.addAll(head.getChildren());
+		queue.add(head.getNext());
 
 		while (!queue.isEmpty()) {
 			Person currentPerson = queue.poll();
@@ -202,6 +189,8 @@ public class FamilyTree {
 		return false;
 	}
 
-	/* addParent(), getSiblings(), marry(), divorce(), getParents(),
-	 relationshipBetween() methods to be implemented in future. */
+	/*
+	 * addParent(), getSiblings(), marry(), divorce(), getParents(),
+	 * relationshipBetween() methods to be implemented in future.
+	 */
 }

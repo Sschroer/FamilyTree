@@ -22,21 +22,6 @@ public class Person {
 	private final List<Person> children;
 	private final List<Person> exes;
 
-	/**
-	 * Constructor for default instance (head of FamilyTree)
-	 */
-	protected Person() {
-		this.name = "";
-		this.gender = Sex.UNKNOWN;
-		this.birthday = null;
-		this.deathdate = null;
-		this.mother = null;
-		this.father = null;
-		this.currentSpouse = null;
-		this.children = new ArrayList<>();
-		this.exes = new ArrayList<>();
-
-	}
 
 	/**
 	 * This method creates a person who's sex is known.
@@ -285,16 +270,7 @@ public class Person {
 		return false;
 	}
 
-	/**
-	 * 
-	 * @return true if person is default instance, False if person isn't default
-	 *         instance.
-	 */
-	public boolean isHead() {
-		return name.isEmpty() && gender == Sex.UNKNOWN && birthday == null
-				&& deathdate == null && mother == null && father == null
-				&& currentSpouse == null && exes.isEmpty();
-	}
+	
 
 	@Override
 	public String toString() {
