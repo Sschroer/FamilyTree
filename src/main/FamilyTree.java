@@ -42,14 +42,6 @@ public class FamilyTree {
 	}
 
 	/**
-	 * @param newHead
-	 *            the head to set
-	 */
-	public void setNext(Person newHead) {
-		head.setNext(newHead);
-	}
-
-	/**
 	 * Finds a person in the family tree with the specified name and birthday
 	 * using breadth-first search.
 	 *
