@@ -2,9 +2,15 @@ package main;
 
 import java.util.Objects;
 
+/**
+ * Represents a linking node.
+ * Each node holds a reference to the next node.
+ * This class is generic, allowing it to store any type of data.
+ *@author Stephen Schroer
+ * @param <T> the type of data stored in the node
+ */
 public class Node<T> {
 	T next;
-
 	
 	/**
 	 * @return the next
