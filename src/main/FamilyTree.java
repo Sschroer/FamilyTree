@@ -31,6 +31,7 @@ public class FamilyTree {
 	 *            family tree
 	 */
 	public FamilyTree(Person progenitor) {
+		head = new Node<>();
 		head.setNext(progenitor);
 	}
 
