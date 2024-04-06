@@ -18,9 +18,9 @@ public class Person {
 	private LocalDate deathdate;
 	private Person mother;
 	private Person father;
-	private Person currentSpouse;
+	private boolean isMarried;
 	private final List<Person> children;
-	private final List<Person> exes;
+	private final List<Person> partners;
 
 
 	/**
@@ -30,15 +30,15 @@ public class Person {
 	 *            The gender of the person. Must be either "male" or "female".
 	 */
 	protected Person(Sex gender) {
-		this.name = "";
+		name = "";
 		this.gender = gender;
-		this.birthday = null;
-		this.deathdate = null;
-		this.mother = null;
-		this.father = null;
-		this.currentSpouse = null;
+		birthday = null;
+		deathdate = null;
+		mother = null;
+		father = null;
+		isMarried = false;
 		this.children = new ArrayList<>();
-		this.exes = new ArrayList<>();
+		this.partners = new ArrayList<>();
 	}
 
 	/**
@@ -57,9 +57,9 @@ public class Person {
 		this.deathdate = null;
 		this.mother = null;
 		this.father = null;
-		this.currentSpouse = null;
+		isMarried = false;
 		this.children = new ArrayList<>();
-		this.exes = new ArrayList<>();
+		this.partners = new ArrayList<>();
 
 	}
 
@@ -83,9 +83,9 @@ public class Person {
 		this.deathdate = deathdate;
 		this.mother = null;
 		this.father = null;
-		this.currentSpouse = null;
+		isMarried = false;
 		this.children = new ArrayList<>();
-		this.exes = new ArrayList<>();
+		this.partners = new ArrayList<>();
 
 	}
 
@@ -107,9 +107,9 @@ public class Person {
 		this.deathdate = null;
 		this.mother = null;
 		this.father = null;
-		this.currentSpouse = null;
+		isMarried = false;
 		this.children = new ArrayList<>();
-		this.exes = new ArrayList<>();
+		this.partners = new ArrayList<>();
 
 	}
 
@@ -220,18 +220,17 @@ public class Person {
 	}
 
 	/**
-	 * @param spouse
-	 *            the currentSpouse to set
+	 * @return the isMarried
 	 */
-	public void setCurrentSpouse(Person currentSpouse) {
-		this.currentSpouse = currentSpouse;
+	public boolean isMarried() {
+		return isMarried;
 	}
 
 	/**
-	 * @return the currentSpouse
+	 * @param isMarried the isMarried to set
 	 */
-	public Person getCurrentSpouse() {
-		return currentSpouse;
+	public void setMarried(boolean isMarried) {
+		this.isMarried = isMarried;
 	}
 
 	/**
@@ -242,10 +241,22 @@ public class Person {
 	}
 
 	/**
-	 * @return the exes
+	 * @return the partners
 	 */
-	public List<Person> getExes() {
-		return exes;
+	public List<Person> getPartners() {
+		return partners;
+	}
+	
+	/**
+	 * Retrieves the spouse of the person.
+	 *
+	 * @return the spouse of the person if they are married, otherwise null
+	 */
+	public Person getSpouse() {
+		if (isMarried) {
+			return partners.get(partners.size() - 1);
+		}
+		return null;
 	}
 
 	/**
@@ -269,22 +280,20 @@ public class Person {
 		}
 		return false;
 	}
-
 	
 
 	@Override
 	public String toString() {
 		return "Person [name=" + name + ", gender=" + gender + ", birthday="
 				+ birthday + ", deathdate=" + deathdate + ", mother=" + mother
-				+ ", father=" + father + ", currentSpouse=" + currentSpouse
-				+ ", children=" + children + ", exes=" + exes + "]";
+				+ ", father=" + father + ", isMarried=" + isMarried
+				+ ", children=" + children + ", partners=" + partners + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(birthday, children, currentSpouse, deathdate, exes,
-				father, gender, mother, name);
-		
+		return Objects.hash(birthday, children, deathdate, father, gender,
+				isMarried, mother, name, partners);
 	}
 
 	@Override
@@ -298,13 +307,11 @@ public class Person {
 		Person other = (Person) obj;
 		return Objects.equals(birthday, other.birthday)
 				&& Objects.equals(children, other.children)
-				&& Objects.equals(currentSpouse, other.currentSpouse)
 				&& Objects.equals(deathdate, other.deathdate)
-				&& Objects.equals(exes, other.exes)
 				&& Objects.equals(father, other.father)
-				&& gender == other.gender
+				&& gender == other.gender && isMarried == other.isMarried
 				&& Objects.equals(mother, other.mother)
-				&& Objects.equals(name, other.name);
+				&& Objects.equals(name, other.name)
+				&& Objects.equals(partners, other.partners);
 	}
-	
 }

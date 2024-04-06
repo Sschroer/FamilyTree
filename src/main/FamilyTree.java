@@ -55,7 +55,11 @@ public class FamilyTree {
 	public Person findPerson(String name, LocalDate birthday) {
 		// Create a queue for a breadth first search
 		Queue<Person> queue = new LinkedList<>();
+		
 		queue.add(head.getNext());
+		if(!head.getNext().getPartners().isEmpty()) {
+			queue.addAll(head.getNext().getPartners());
+		}
 
 		while (!queue.isEmpty()) {
 			Person currentPerson = queue.poll();
@@ -84,14 +88,18 @@ public class FamilyTree {
 	 */
 	public Person findPerson(Person target) {
 		Queue<Person> queue = new LinkedList<>();
-		queue.add(head.getNext());
 
-		while (!queue.isEmpty()) {
-			Person currentPerson = queue.poll();
-			if (currentPerson.equals(target)) {
-				return currentPerson;
+		queue.add(head.getNext());
+		if (!head.getNext().getPartners().isEmpty()) {
+			queue.addAll(head.getNext().getPartners());
+
+			while (!queue.isEmpty()) {
+				Person currentPerson = queue.poll();
+				if (currentPerson.equals(target)) {
+					return currentPerson;
+				}
+				queue.addAll(currentPerson.getChildren());
 			}
-			queue.addAll(currentPerson.getChildren());
 		}
 		return null;
 	}
@@ -108,19 +116,25 @@ public class FamilyTree {
 	public List<Person> findPeople(String name) {
 		List<Person> foundPeople = new ArrayList<>();
 		Queue<Person> queue = new LinkedList<>();
+
 		queue.add(head.getNext());
+		if (!head.getNext().getPartners().isEmpty()) {
+			queue.addAll(head.getNext().getPartners());
 
-		while (!queue.isEmpty()) {
-			Person currentPerson = queue.poll();
+			while (!queue.isEmpty()) {
+				Person currentPerson = queue.poll();
 
-			if (currentPerson.getName().equalsIgnoreCase(name)) {
-				foundPeople.add(currentPerson); // Found a person with matching
-												// name
+				if (currentPerson.getName().equalsIgnoreCase(name)) {
+					foundPeople.add(currentPerson); // Found a person with
+													// matching
+													// name
+				}
+				// Add children to the queue for further exploration
+				queue.addAll(currentPerson.getChildren());
 			}
-			// Add children to the queue for further exploration
-			queue.addAll(currentPerson.getChildren());
+			return foundPeople;
 		}
-		return foundPeople;
+		return null;
 	}
 
 	/**
@@ -145,8 +159,8 @@ public class FamilyTree {
 		Person spouse = findPerson(currentSpouse);
 
 		if (bioParent != null && spouse != null) {
-			if (bioParent.getCurrentSpouse().equals(spouse)
-					&& spouse.getCurrentSpouse().equals(bioParent)) {
+			if (bioParent.getSpouse().equals(spouse)
+					&& spouse.getSpouse().equals(bioParent)) {
 				bioParent.addChild(child);
 				spouse.addChild(child);
 				return true;
@@ -211,9 +225,55 @@ public class FamilyTree {
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * Marries the specified groom and bride.
+	 *
+	 * @param groom the person representing the groom
+	 * @param bride the person representing the bride
+	 * @return true if the marriage is successful, false otherwise
+	 * @throws UnsupportedOperationException
+	 */
+	public boolean marry(Person groom, Person bride) {
+		throw new UnsupportedOperationException("Not yet implemented");
+		//write this method next.
+	}
+
+	/**
+	 * Checks if two persons are blood-related within the family tree.
+	 *
+	 * @param a the first person to check for blood relation
+	 * @param b the second person to check for blood relation
+	 * @return true if both persons are blood-related within the family tree, otherwise false
+	 */
+	public boolean areBloodRelated(Person a, Person b) {
+		return isFamilyMember(a) && isFamilyMember(b);
+	}
+
+	/**
+	 * Checks if a given person is a member of the local family tree.
+	 *
+	 * @param target the person to check for membership in the local family tree
+	 * @return true if the person is a member of the family tree, otherwise false
+	 */
+	private boolean isFamilyMember(Person target) {
+		Queue<Person> queue = new LinkedList<>();
+		queue.add(head.getNext());
+
+		while (!queue.isEmpty()) {
+			Person currentPerson = queue.poll();
+			if (currentPerson.equals(target)) {
+				return true;
+			}
+			queue.addAll(currentPerson.getChildren());
+		}
+		return false;
+	}
+
 
 	/*
-	 * getSiblings(), setSpouse(), removeSpouse(), getParents(),
+	 * getSiblings(), setSpouse(), getParents(),
 	 * relationshipBetween() methods to be implemented in future.
 	 */
 }
