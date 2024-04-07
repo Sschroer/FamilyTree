@@ -293,8 +293,6 @@ public class FamilyTree {
 	 */
 	public Set<Person> getSiblings(Person target) {
 		Set<Person> siblings = new HashSet<>();
-		HashSet<Integer> nums = new HashSet<>();
-		siblings.
 
 		if (target.getFather() != null) {
 			siblings.addAll(target.getFather().getChildren());
