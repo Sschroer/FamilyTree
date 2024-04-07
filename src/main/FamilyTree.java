@@ -2,9 +2,12 @@ package main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * This is the FamilyTree Object.
@@ -55,9 +58,9 @@ public class FamilyTree {
 	public Person findPerson(String name, LocalDate birthday) {
 		// Create a queue for a breadth first search
 		Queue<Person> queue = new LinkedList<>();
-		
+
 		queue.add(head.getNext());
-		if(!head.getNext().getPartners().isEmpty()) {
+		if (!head.getNext().getPartners().isEmpty()) {
 			queue.addAll(head.getNext().getPartners());
 		}
 
@@ -225,27 +228,31 @@ public class FamilyTree {
 		}
 		return false;
 	}
-	
-	
+
 	/**
 	 * Marries the specified groom and bride.
 	 *
-	 * @param groom the person representing the groom
-	 * @param bride the person representing the bride
+	 * @param groom
+	 *            the person representing the groom
+	 * @param bride
+	 *            the person representing the bride
 	 * @return true if the marriage is successful, false otherwise
 	 * @throws UnsupportedOperationException
 	 */
 	public boolean marry(Person groom, Person bride) {
 		throw new UnsupportedOperationException("Not yet implemented");
-		//write this method next.
+		// implement this method next.
 	}
 
 	/**
 	 * Checks if two persons are blood-related within the family tree.
 	 *
-	 * @param a the first person to check for blood relation
-	 * @param b the second person to check for blood relation
-	 * @return true if both persons are blood-related within the family tree, otherwise false
+	 * @param a
+	 *            the first person to check for blood relation
+	 * @param b
+	 *            the second person to check for blood relation
+	 * @return true if both persons are blood-related within the family tree,
+	 *         otherwise false
 	 */
 	public boolean areBloodRelated(Person a, Person b) {
 		return isFamilyMember(a) && isFamilyMember(b);
@@ -254,8 +261,10 @@ public class FamilyTree {
 	/**
 	 * Checks if a given person is a member of the local family tree.
 	 *
-	 * @param target the person to check for membership in the local family tree
-	 * @return true if the person is a member of the family tree, otherwise false
+	 * @param target
+	 *            the person to check for membership in the local family tree
+	 * @return true if the person is a member of the family tree, otherwise
+	 *         false
 	 */
 	private boolean isFamilyMember(Person target) {
 		Queue<Person> queue = new LinkedList<>();
@@ -271,9 +280,40 @@ public class FamilyTree {
 		return false;
 	}
 
+	/**
+	 * Retrieves the set of siblings for a given person.
+	 *
+	 * Siblings share at least one parent with the specified person. Returns an
+	 * empty set if the person has no siblings.
+	 *
+	 * @param target
+	 *            The person for whom siblings are to be retrieved.
+	 * @return A set containing the siblings of the target person, or an empty
+	 *         set if there are none.
+	 */
+	public Set<Person> getSiblings(Person target) {
+		Set<Person> siblings = new HashSet<>();
+		HashSet<Integer> nums = new HashSet<>();
+		siblings.
+
+		if (target.getFather() != null) {
+			siblings.addAll(target.getFather().getChildren());
+		}
+
+		if (target.getMother() != null) {
+			siblings.addAll(target.getMother().getChildren());
+
+		}
+			// remove target from siblings set
+			siblings.remove(target);
+
+			return siblings.isEmpty() ? Collections.emptySet() : siblings;
+		}
+
 
 	/*
-	 * getSiblings(), setSpouse(), getParents(),
-	 * relationshipBetween() methods to be implemented in future.
+	 *
+	 *setSpouse(),relationshipBetween() methods
+	 * to be implemented in future.
 	 */
 }
