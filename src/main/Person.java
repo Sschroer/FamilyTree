@@ -258,7 +258,18 @@ public class Person {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Returns a new Person object with the opposite gender of the provided Person.
+	 *
+	 * @param a The Person object whose gender will be used to determine the opposite gender.
+	 * @return A new Person object with the opposite gender of the provided Person.
+	 */
+	public Person createOppositeGender(Person a) {
+		Sex unknownSex = (a.getGender() == Sex.MALE) ? Sex.FEMALE : Sex.MALE;
+		return new Person(unknownSex);
+	}
+	
 	/**
 	 * Add child to Person's children and assign them as a parent
 	 * 

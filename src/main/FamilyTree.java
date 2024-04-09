@@ -187,11 +187,7 @@ public class FamilyTree {
 		Person bioParent = findPerson(parent);
 
 		if (bioParent != null) {
-			Sex unknownParentGender = (bioParent.getGender() == Sex.MALE)
-					? Sex.FEMALE
-					: Sex.MALE;
-
-			Person unknownParent = new Person(unknownParentGender);
+			Person unknownParent = parent.createOppositeGender(bioParent);
 
 			bioParent.addChild(child);
 			unknownParent.addChild(child);
@@ -230,18 +226,75 @@ public class FamilyTree {
 	}
 
 	/**
-	 * Marries the specified groom and bride.
+	 * Marries two persons by updating their marital status and partner lists.
+	 * If both spouses are found and are already married to each other, their
+	 * existing marriage is dissolved. If only one spouse is found, they are
+	 * married to a new person of the opposite gender. If neither spouse is
+	 * found, the method returns false.
+	 *
+	 * @param spouseA
+	 *            The first person to be married.
+	 * @param spouseB
+	 *            The second person to be married.
+	 * @return true if the marriage is successful, false otherwise.
+	 */
+	public boolean marry(Person spouseA, Person spouseB) {
+		Person groom = findPerson(spouseA);
+		Person bride = findPerson(spouseB);
+
+		// Error handling if both spouses are not found
+		if (groom == null && bride == null) {
+			return false;
+		}
+
+		// Check if both spouses are already married to each other
+		if (groom != null && bride != null
+				&& groom.getPartners().contains(bride)
+				&& bride.getPartners().contains(groom)) {
+
+			/*
+			 * Remove existing marriage if spouses are already married to each
+			 * other
+			 */
+			groom.getPartners().remove(bride);
+			bride.getPartners().remove(groom);
+
+			/*
+			 * Adding them back in so they are located at the last index (are
+			 * current spouses)
+			 */
+			haveWedding(groom, bride);
+			return true;
+
+		} else if (groom != null && bride == null) {
+			haveWedding(groom, groom.createOppositeGender(groom));
+			return true;
+
+		} else if (groom == null && bride != null) {
+			haveWedding(bride.createOppositeGender(bride), bride);
+			return true;
+
+		} else {
+			haveWedding(groom, bride);
+			return true;
+		}
+	}
+
+	/**
+	 * Simulates a wedding ceremony between a groom and a bride. Updates the
+	 * marital status and partner lists of both individuals.
 	 *
 	 * @param groom
-	 *            the person representing the groom
+	 *            The groom involved in the wedding ceremony.
 	 * @param bride
-	 *            the person representing the bride
-	 * @return true if the marriage is successful, false otherwise
-	 * @throws UnsupportedOperationException
+	 *            The bride involved in the wedding ceremony.
 	 */
-	public boolean marry(Person groom, Person bride) {
-		throw new UnsupportedOperationException("Not yet implemented");
-		// implement this method next.
+	private void haveWedding(Person groom, Person bride) {
+		groom.getPartners().add(bride);
+		groom.setMarried(true);
+
+		bride.getPartners().add(groom);
+		bride.setMarried(true);
 	}
 
 	/**
@@ -302,16 +355,13 @@ public class FamilyTree {
 			siblings.addAll(target.getMother().getChildren());
 
 		}
-			// remove target from siblings set
-			siblings.remove(target);
+		// remove target from siblings set
+		siblings.remove(target);
 
-			return siblings.isEmpty() ? Collections.emptySet() : siblings;
-		}
-
+		return siblings.isEmpty() ? Collections.emptySet() : siblings;
+	}
 
 	/*
-	 *
-	 *setSpouse(),relationshipBetween() methods
-	 * to be implemented in future.
+	 * setSpouse(), relationshipBetween(), divorce() methods to be implemented in future.
 	 */
 }
