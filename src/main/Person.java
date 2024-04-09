@@ -249,6 +249,7 @@ public class Person {
 	
 	/**
 	 * Retrieves the spouse of the person.
+	 * Assumes that current spouse will always be at the last index.
 	 *
 	 * @return the spouse of the person if they are married, otherwise null
 	 */
@@ -257,6 +258,28 @@ public class Person {
 			return partners.get(partners.size() - 1);
 		}
 		return null;
+	}
+	
+	/**
+	 * Checks if the current instance is considered an ex-partner of the provided person.
+	 * An ex-partner is defined as a person who was previously in a relationship with the provided person,
+	 * excluding the current instance if present and if the current instance is marked as married.
+	 *
+	 * @param a The person to check for ex-partnership.
+	 * @return {@code true} if the current instance is considered an ex-partner based on its presence 
+	 *         in the list of partners of the provided person, excluding itself if marked as the current partner
+	 *         and if marked as married, {@code false} otherwise.
+	 */
+	public boolean isExOf(Person a) {
+	    List<Person> partners = a.getPartners();
+	    int lastIndex = partners.size() - 1;
+	   
+	    if (lastIndex >= 0 && partners.get(lastIndex) == this && this.isMarried) {
+	        return false; 
+	        // Exclude the last index as it represents the current partner
+	    }
+	    
+	    return partners.contains(this);
 	}
 	
 	/**
