@@ -23,7 +23,6 @@ public class Person {
 	private final List<Person> children;
 	private final List<Person> partners;
 
-
 	/**
 	 * This method creates a person who's sex is known.
 	 * 
@@ -76,8 +75,8 @@ public class Person {
 	 * @throws GenderException
 	 *             If the gender provided is not "male" or "female".
 	 */
-	public Person(String name, String gender, LocalDate birthday, LocalDate deathdate)
-			throws GenderException {
+	public Person(String name, String gender, LocalDate birthday,
+			LocalDate deathdate) throws GenderException {
 		this.name = name;
 		this.gender = parseGender(gender);
 		this.birthday = birthday;
@@ -146,7 +145,7 @@ public class Person {
 	 */
 	private Sex parseGender(String gender) throws GenderException {
 		gender = gender.trim();
-		
+
 		if (gender != null && !gender.isBlank()) {
 			if (gender.equalsIgnoreCase("female")
 					|| gender.equalsIgnoreCase("f")) {
@@ -221,27 +220,27 @@ public class Person {
 	public void setFather(Person father) {
 		this.father = father;
 	}
-	
+
 	/**
 	 * Retrieves a list of parents for this person.
 	 *
-	 * @return A list containing the parents of this person. If the person has no parents,
-	 *         an empty list is returned.
+	 * @return A list containing the parents of this person. If the person has
+	 *         no parents, an empty list is returned.
 	 */
-	public List<Person> getParents(){
+	public List<Person> getParents() {
 		List<Person> parents = new ArrayList<>();
-		 
+
 		if (getFather() == null && getMother() == null) {
-			 return Collections.emptyList();
-		 }
-		 if (getFather() != null) {
-			 parents.add(getFather());
-		 }
-		 if(getMother() != null) {
-			 parents.add(getMother());
-		 }
-		 
-		 return parents;
+			return Collections.emptyList();
+		}
+		if (getFather() != null) {
+			parents.add(getFather());
+		}
+		if (getMother() != null) {
+			parents.add(getMother());
+		}
+
+		return parents;
 	}
 
 	/**
@@ -252,7 +251,8 @@ public class Person {
 	}
 
 	/**
-	 * @param isMarried the isMarried to set
+	 * @param isMarried
+	 *            the isMarried to set
 	 */
 	public void setMarried(boolean isMarried) {
 		this.isMarried = isMarried;
@@ -271,10 +271,10 @@ public class Person {
 	public List<Person> getPartners() {
 		return partners;
 	}
-	
+
 	/**
-	 * Retrieves the spouse of the person.
-	 * Assumes that current spouse will always be at the last index.
+	 * Retrieves the spouse of the person. Assumes that current spouse will
+	 * always be at the last index.
 	 *
 	 * @return the spouse of the person if they are married, otherwise null
 	 */
@@ -284,40 +284,48 @@ public class Person {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Checks if the current instance is considered an ex-partner of the provided person.
-	 * An ex-partner is defined as a person who was previously in a relationship with the provided person,
-	 * excluding the current instance if present and if the current instance is marked as married.
+	 * Checks if the current instance is considered an ex-partner of the
+	 * provided person. An ex-partner is defined as a person who was previously
+	 * in a relationship with the provided person, excluding the current
+	 * instance if present and if the current instance is marked as married.
 	 *
-	 * @param a The person to check for ex-partnership.
-	 * @return {@code true} if the current instance is considered an ex-partner based on its presence 
-	 *         in the list of partners of the provided person, excluding itself if marked as the current partner
-	 *         and if marked as married, {@code false} otherwise.
+	 * @param a
+	 *            The person to check for ex-partnership.
+	 * @return {@code true} if the current instance is considered an ex-partner
+	 *         based on its presence in the list of partners of the provided
+	 *         person, excluding itself if marked as the current partner and if
+	 *         marked as married, {@code false} otherwise.
 	 */
 	public boolean isExOf(Person a) {
-	    List<Person> partners = a.getPartners();
-	    int lastIndex = partners.size() - 1;
-	   
-	    if (lastIndex >= 0 && partners.get(lastIndex) == this && this.isMarried) {
-	        return false; 
-	        // Exclude the last index as it represents the current partner
-	    }
-	    
-	    return partners.contains(this);
+		List<Person> partners = a.getPartners();
+		int lastIndex = partners.size() - 1;
+
+		if (lastIndex >= 0 && partners.get(lastIndex) == this
+				&& this.isMarried) {
+			return false;
+			// Exclude the last index as it represents the current partner
+		}
+
+		return partners.contains(this);
 	}
-	
+
 	/**
-	 * Returns a new Person object with the opposite gender of the provided Person.
+	 * Returns a new Person object with the opposite gender of the provided
+	 * Person.
 	 *
-	 * @param a The Person object whose gender will be used to determine the opposite gender.
-	 * @return A new Person object with the opposite gender of the provided Person.
+	 * @param a
+	 *            The Person object whose gender will be used to determine the
+	 *            opposite gender.
+	 * @return A new Person object with the opposite gender of the provided
+	 *         Person.
 	 */
 	public Person createOppositeGender(Person a) {
 		Sex unknownSex = (a.getGender() == Sex.MALE) ? Sex.FEMALE : Sex.MALE;
 		return new Person(unknownSex);
 	}
-	
+
 	/**
 	 * Add child to Person's children and assign them as a parent
 	 * 
@@ -339,7 +347,6 @@ public class Person {
 		}
 		return false;
 	}
-	
 
 	@Override
 	public String toString() {

@@ -220,6 +220,7 @@ public class FamilyTree {
 				kid.setMother(parent);
 			}
 			parent.addChild(child);
+
 			return true;
 		}
 		return false;
@@ -241,6 +242,11 @@ public class FamilyTree {
 	public boolean marry(Person spouseA, Person spouseB) {
 		Person groom = findPerson(spouseA);
 		Person bride = findPerson(spouseB);
+
+		// cannot self-marry
+		if (groom == bride) {
+			return false;
+		}
 
 		// Error handling if both spouses are not found
 		if (groom == null && bride == null) {
@@ -361,7 +367,37 @@ public class FamilyTree {
 		return siblings.isEmpty() ? Collections.emptySet() : siblings;
 	}
 
+	/**
+	 * Divorces the specified person from their spouse. This method sets the
+	 * marital status of both the divorcer and their spouse to false,
+	 * effectively ending their marriage.
+	 *
+	 * @param target
+	 *            the person who wants to get divorced
+	 * @return true if the divorce was successfully processed, false otherwise
+	 */
+	public boolean divorce(Person target) {
+		Person divorcer = findPerson(target);
+
+		// Check if the divorcer is found
+		if (divorcer == null) {
+			return false;
+		}
+
+		// Check if the divorcer's spouse relationship is consistent
+		if (divorcer.getSpouse().getSpouse() != divorcer) {
+			return false;
+		}
+
+		// Set the divorcer's married status and their partner's to false
+		divorcer.setMarried(false);
+		divorcer.getSpouse().setMarried(false);
+		
+		return true;
+
+	}
+
 	/*
-	 * relationshipBetween(), divorce() methods to be implemented in future.
+	 * checkRelation(), findHighestRoot() method(s) to be implemented in future.
 	 */
 }
