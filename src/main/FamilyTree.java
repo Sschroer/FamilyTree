@@ -362,6 +362,6 @@ public class FamilyTree {
 	}
 
 	/*
-	 * setSpouse(), relationshipBetween(), divorce() methods to be implemented in future.
+	 * relationshipBetween(), divorce() methods to be implemented in future.
 	 */
 }

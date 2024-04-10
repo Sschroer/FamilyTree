@@ -2,6 +2,7 @@ package main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -144,13 +145,15 @@ public class Person {
 	 * @throws GenderException
 	 */
 	private Sex parseGender(String gender) throws GenderException {
+		gender = gender.trim();
+		
 		if (gender != null && !gender.isBlank()) {
-			if (gender.compareToIgnoreCase("female") == 0
-					|| gender.compareToIgnoreCase("f") == 0) {
+			if (gender.equalsIgnoreCase("female")
+					|| gender.equalsIgnoreCase("f")) {
 				return Sex.FEMALE;
 			}
-			if (gender.compareToIgnoreCase("male") == 0
-					|| gender.compareToIgnoreCase("m") == 0) {
+			if (gender.equalsIgnoreCase("male")
+					|| gender.equalsIgnoreCase("m")) {
 				return Sex.MALE;
 			}
 		}
@@ -217,6 +220,28 @@ public class Person {
 	 */
 	public void setFather(Person father) {
 		this.father = father;
+	}
+	
+	/**
+	 * Retrieves a list of parents for this person.
+	 *
+	 * @return A list containing the parents of this person. If the person has no parents,
+	 *         an empty list is returned.
+	 */
+	public List<Person> getParents(){
+		List<Person> parents = new ArrayList<>();
+		 
+		if (getFather() == null && getMother() == null) {
+			 return Collections.emptyList();
+		 }
+		 if (getFather() != null) {
+			 parents.add(getFather());
+		 }
+		 if(getMother() != null) {
+			 parents.add(getMother());
+		 }
+		 
+		 return parents;
 	}
 
 	/**
