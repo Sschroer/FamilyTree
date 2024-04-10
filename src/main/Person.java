@@ -114,6 +114,27 @@ public class Person {
 	}
 
 	/**
+	 * Constructs a new Person object with the specified name and gender.
+	 *
+	 * @param name
+	 *            The name of the person.
+	 * @param gender
+	 *            The gender of the person.
+	 */
+	protected Person(String name, Sex gender) {
+		this.name = name;
+		this.gender = gender;
+		this.birthday = null;
+		this.deathdate = null;
+		this.mother = null;
+		this.father = null;
+		isMarried = false;
+		this.children = new ArrayList<>();
+		this.partners = new ArrayList<>();
+
+	}
+
+	/**
 	 * @return the name
 	 */
 	public String getName() {
@@ -324,6 +345,22 @@ public class Person {
 	public Person createOppositeGender(Person a) {
 		Sex unknownSex = (a.getGender() == Sex.MALE) ? Sex.FEMALE : Sex.MALE;
 		return new Person(unknownSex);
+	}
+
+	/**
+	 * Creates a new Person object with the opposite gender of the specified
+	 * person.
+	 *
+	 * @param a
+	 *            The Person whose gender opposite is to be determined.
+	 * @param name
+	 *            The name for the new Person object.
+	 * @return A new Person object with the opposite gender of the specified
+	 *         person.
+	 */
+	public Person createOppositeGender(String name, Person a) {
+		Sex unknownSex = (a.getGender() == Sex.MALE) ? Sex.FEMALE : Sex.MALE;
+		return new Person(name, unknownSex);
 	}
 
 	/**

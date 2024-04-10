@@ -272,12 +272,24 @@ public class FamilyTree {
 			haveWedding(groom, bride);
 			return true;
 
+			/*
+			 * If the groom is not null but the bride is null, create a new
+			 * spouse for the groom with the opposite gender of spouseB, using
+			 * spouseB's name, and proceed with the wedding
+			 */
 		} else if (groom != null && bride == null) {
-			haveWedding(groom, groom.createOppositeGender(groom));
+			haveWedding(groom,
+					groom.createOppositeGender(spouseB.getName(), groom));
 			return true;
 
+			/*
+			 * If the groom is null but the bride is not null, create a new
+			 * spouse for the bride with the opposite gender of spouseA, using
+			 * spouseA's name, and proceed with the wedding
+			 */
 		} else if (groom == null && bride != null) {
-			haveWedding(bride.createOppositeGender(bride), bride);
+			haveWedding(bride.createOppositeGender(spouseA.getName(), bride),
+					bride);
 			return true;
 
 		} else {
@@ -392,12 +404,13 @@ public class FamilyTree {
 		// Set the divorcer's married status and their partner's to false
 		divorcer.setMarried(false);
 		divorcer.getSpouse().setMarried(false);
-		
+
 		return true;
 
 	}
 
 	/*
-	 * checkRelation(), findHighestRoot() method(s) to be implemented in future.
+	 * checkRelation(), findHighestRoot(), generationsBeteween() method(s) to be
+	 * implemented in future.
 	 */
 }
