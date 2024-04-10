@@ -385,6 +385,19 @@ public class Person {
 		return false;
 	}
 
+	/**
+	 * Checks if the current person is a child of the specified target person.
+	 *
+	 * @param target
+	 *            the target person to check if the current person is their
+	 *            child
+	 * @return true if the current person is a child of the target person, false
+	 *         otherwise
+	 */
+	public boolean isChildOf(Person target) {
+		return target.getChildren().contains(this);
+	}
+
 	@Override
 	public String toString() {
 		return "Person [name=" + name + ", gender=" + gender + ", birthday="

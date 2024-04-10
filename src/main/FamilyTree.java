@@ -409,8 +409,32 @@ public class FamilyTree {
 
 	}
 
+	/**
+	 * Allows a person to adopt another person as their child.
+	 *
+	 * @param newParent
+	 *            the person adopting the child
+	 * @param child
+	 *            the person being adopted
+	 * @return true if the adoption is successful (i.e., the child is not
+	 *         already related to the adoptive parent), false otherwise
+	 */
+	public boolean adopt(Person newParent, Person child) {
+
+		// checks to see if child is not related to Adopted Parent.
+		if (!child.isChildOf(newParent)) {
+
+			// add child to adopted parent's children list
+			newParent.getChildren().add(child);
+			return true;
+		}
+
+		// If the child is already related to the parent
+		return false;
+	}
+
 	/*
-	 * checkRelation(), findHighestRoot(), generationsBeteween() method(s) to be
-	 * implemented in future.
+	 * adopt(), checkRelation(), findHighestRoot(), generationsBeteween()
+	 * method(s) to be implemented in future.
 	 */
 }
