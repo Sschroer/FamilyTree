@@ -19,6 +19,8 @@ public class Person {
 	private LocalDate deathdate;
 	private Person mother;
 	private Person father;
+	private Person guardian;
+	private boolean wasAdopted;
 	private boolean isMarried;
 	private final List<Person> children;
 	private final List<Person> partners;
@@ -36,6 +38,8 @@ public class Person {
 		deathdate = null;
 		mother = null;
 		father = null;
+		guardian = null;
+		wasAdopted = false;
 		isMarried = false;
 		this.children = new ArrayList<>();
 		this.partners = new ArrayList<>();
@@ -57,6 +61,8 @@ public class Person {
 		this.deathdate = null;
 		this.mother = null;
 		this.father = null;
+		guardian = null;
+		wasAdopted = false;
 		isMarried = false;
 		this.children = new ArrayList<>();
 		this.partners = new ArrayList<>();
@@ -83,6 +89,8 @@ public class Person {
 		this.deathdate = deathdate;
 		this.mother = null;
 		this.father = null;
+		guardian = null;
+		wasAdopted = false;
 		isMarried = false;
 		this.children = new ArrayList<>();
 		this.partners = new ArrayList<>();
@@ -107,6 +115,8 @@ public class Person {
 		this.deathdate = null;
 		this.mother = null;
 		this.father = null;
+		guardian = null;
+		wasAdopted = false;
 		isMarried = false;
 		this.children = new ArrayList<>();
 		this.partners = new ArrayList<>();
@@ -265,6 +275,34 @@ public class Person {
 	}
 
 	/**
+	 * @return the guardian
+	 */
+	public Person getGuardian() {
+		return guardian;
+	}
+
+	/**
+	 * @param guardian the guardian to set
+	 */
+	public void setGuardian(Person guardian) {
+		this.guardian = guardian;
+	}
+
+	/**
+	 * @return the wasAdopted
+	 */
+	public boolean isWasAdopted() {
+		return wasAdopted;
+	}
+
+	/**
+	 * @param wasAdopted the wasAdopted to set
+	 */
+	public void setWasAdopted(boolean wasAdopted) {
+		this.wasAdopted = wasAdopted;
+	}
+
+	/**
 	 * @return the isMarried
 	 */
 	public boolean isMarried() {
@@ -402,14 +440,15 @@ public class Person {
 	public String toString() {
 		return "Person [name=" + name + ", gender=" + gender + ", birthday="
 				+ birthday + ", deathdate=" + deathdate + ", mother=" + mother
-				+ ", father=" + father + ", isMarried=" + isMarried
+				+ ", father=" + father + ", guardian=" + guardian
+				+ ", wasAdopted=" + wasAdopted + ", isMarried=" + isMarried
 				+ ", children=" + children + ", partners=" + partners + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(birthday, children, deathdate, father, gender,
-				isMarried, mother, name, partners);
+				guardian, isMarried, mother, name, partners, wasAdopted);
 	}
 
 	@Override
@@ -425,9 +464,12 @@ public class Person {
 				&& Objects.equals(children, other.children)
 				&& Objects.equals(deathdate, other.deathdate)
 				&& Objects.equals(father, other.father)
-				&& gender == other.gender && isMarried == other.isMarried
+				&& gender == other.gender
+				&& Objects.equals(guardian, other.guardian)
+				&& isMarried == other.isMarried
 				&& Objects.equals(mother, other.mother)
 				&& Objects.equals(name, other.name)
-				&& Objects.equals(partners, other.partners);
+				&& Objects.equals(partners, other.partners)
+				&& wasAdopted == other.wasAdopted;
 	}
 }

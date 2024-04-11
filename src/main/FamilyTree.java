@@ -424,8 +424,14 @@ public class FamilyTree {
 		// checks to see if child is not related to Adopted Parent.
 		if (!child.isChildOf(newParent)) {
 
+			//set child's guardian to newParent and 
+			child.setGuardian(newParent);
+			
 			// add child to adopted parent's children list
 			newParent.getChildren().add(child);
+			
+			//Change adopted status to true
+			child.setWasAdopted(true);
 			return true;
 		}
 
@@ -434,7 +440,7 @@ public class FamilyTree {
 	}
 
 	/*
-	 * adopt(), checkRelation(), findHighestRoot(), generationsBeteween()
+	 * checkRelation(), findHighestRoot(), generationsBeteween()
 	 * method(s) to be implemented in future.
 	 */
 }
