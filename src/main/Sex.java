@@ -1,10 +1,18 @@
 package main;
 
 /**
- * This is the Enum containing the biological sexes.
+ * This is the Enum containing the two biological sexes.
  * @author Stephen Schroer
  *
  */
 public enum Sex {
-	MALE, FEMALE
+	/**
+	 * The biological sex "male"
+	 */
+	MALE, 
+	
+	/**
+	 * The biological sex "female"
+	 */
+	FEMALE
 }
