@@ -424,13 +424,13 @@ public class FamilyTree {
 		// checks to see if child is not related to Adopted Parent.
 		if (!child.isChildOf(newParent)) {
 
-			//set child's guardian to newParent and 
+			// set child's guardian to newParent and
 			child.setGuardian(newParent);
-			
+
 			// add child to adopted parent's children list
 			newParent.getChildren().add(child);
-			
-			//Change adopted status to true
+
+			// Change adopted status to true
 			child.setWasAdopted(true);
 			return true;
 		}
@@ -439,8 +439,56 @@ public class FamilyTree {
 		return false;
 	}
 
+	/**
+	 * Determines if two persons are closely related, meaning they share a common ancestor no later than their great-grandparents.
+	 *
+	 * @param a The first person to check for relatedness.
+	 * @param b The second person to check for relatedness.
+	 * @return {@code true} if the persons are closely related, {@code false} otherwise.
+	 */
+	public boolean areCloselyRelated(Person a, Person b) {
+
+		Person one = findPerson(a);
+		Person two = findPerson(b);
+
+		if (one == null || two == null) {
+			return false; // If either person is not found, they can't be
+							// related
+		}
+
+		int count = 0;
+
+		while (count < 3) {
+			// Move up one generation for both persons on the father's side
+			Person relativeOf_a_father = one.getFather();
+			Person relativeOf_b_father = two.getFather();
+
+			// Move up one generation for both persons on the mother's side
+			Person relativeOf_a_mother = one.getMother();
+			Person relativeOf_b_mother = two.getMother();
+
+			/*
+			 * Check for a common ancestor on both the father's and mother's
+			 * sides
+			 */
+			if (relativeOf_a_father.equals(relativeOf_b_father)
+					|| relativeOf_a_mother.equals(relativeOf_b_mother)) {
+				return true;
+				// If a common ancestor is found, they are closely related
+			}
+
+			count++;
+		}
+
+		return false; /*
+						 * If no common ancestor is found up to the
+						 * great-grandparent level on either side, they are not
+						 * closely related
+						 */
+	}
+
 	/*
-	 * checkRelation(), findHighestRoot(), generationsBeteween()
-	 * method(s) to be implemented in future.
+	 * checkRelation(), findHighestRoot(), generationsBeteween() method(s) to be
+	 * implemented in future.
 	 */
 }
